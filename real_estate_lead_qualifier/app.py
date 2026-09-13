@@ -44,6 +44,46 @@ st.markdown("""
     background:#fff3f3; border:2px dashed #ff6b6b;
     border-radius:12px; padding:20px; text-align:center;
 }
+
+/* ── Role Selector Cards ── */
+.role-hero {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    border-radius: 20px;
+    padding: 48px 32px;
+    text-align: center;
+    color: white;
+    margin-bottom: 32px;
+}
+.role-hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; }
+.role-hero p  { font-size: 1.1rem; opacity: 0.75; }
+
+.role-card {
+    border-radius: 18px;
+    padding: 36px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 8px;
+}
+.role-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+.buyer-card  { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+.broker-card-role { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+.role-icon   { font-size: 3.5rem; margin-bottom: 12px; }
+.role-label  { font-size: 1.5rem; font-weight: 700; }
+.role-desc   { font-size: 0.95rem; opacity: 0.85; margin-top: 8px; }
+
+/* ── Auth Form ── */
+.auth-header {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    border-radius: 16px;
+    padding: 28px 24px 20px;
+    text-align: center;
+    color: white;
+    margin-bottom: 24px;
+}
+.auth-header h2 { font-size: 1.8rem; font-weight: 700; margin: 0 0 4px; }
+.auth-header p  { opacity: 0.7; margin: 0; }
+.back-link { color: #667eea; cursor: pointer; font-size: 0.9rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -56,52 +96,155 @@ if "role" not in st.session_state:
     st.session_state["role"] = None
 if "user_id" not in st.session_state:
     st.session_state["user_id"] = None
+# Tracks which role the user selected on the landing page ("BUYER" | "BROKER" | None)
+if "selected_role" not in st.session_state:
+    st.session_state["selected_role"] = None
 
 # ─── Auth Gateway ───────────────────────────────────────────────────────────
 if not st.session_state["authenticated"]:
-    st.title("🏠 Real Estate Lead Qualifier")
-    st.caption("Please log in or sign up to continue.")
-    
-    tab1, tab2 = st.tabs(["Login", "Sign Up (Buyer)"])
-    
-    with tab1:
-        with st.form("login_form"):
-            login_email = st.text_input("Email")
-            login_pw = st.text_input("Password", type="password")
-            submitted = st.form_submit_button("Login")
-            if submitted:
-                user = authenticate_user(login_email, login_pw)
-                if user:
-                    st.session_state["authenticated"] = True
-                    st.session_state["role"] = user["role"]
-                    st.session_state["user_id"] = user["user_id"]
-                    st.session_state["name"] = user["name"]
-                    st.rerun()
-                else:
-                    st.error("Invalid email or password.")
-                    
-    with tab2:
-        with st.form("signup_form"):
-            su_name = st.text_input("Full Name")
-            su_phone = st.text_input("Phone Number")
-            su_email = st.text_input("Email")
-            su_pw = st.text_input("Password", type="password")
-            su_pw2 = st.text_input("Confirm Password", type="password")
-            su_submitted = st.form_submit_button("Create Buyer Account")
-            
-            if su_submitted:
-                if not su_name or not su_phone or not su_email or not su_pw:
-                    st.error("All fields are required.")
-                elif su_pw != su_pw2:
-                    st.error("Passwords do not match.")
-                else:
-                    success, msg = create_user(su_name, su_phone, su_email, su_pw, role="BUYER")
-                    if success:
-                        st.success("Account created! You can now log in.")
+
+    # ── STEP 1: Role Selection ───────────────────────────────────────────────
+    if st.session_state["selected_role"] is None:
+        st.markdown("""
+        <div class='role-hero'>
+            <h1>🏠 CyMonics Real Estate</h1>
+            <p>AI-powered lead qualification &amp; property matching platform</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### 👋 Welcome! Please select who you are to continue:")
+        st.markdown("")
+
+        col_buyer, col_broker = st.columns(2, gap="large")
+
+        with col_buyer:
+            st.markdown("""
+            <div class='role-card buyer-card'>
+                <div class='role-icon'>🏡</div>
+                <div class='role-label'>I'm a Buyer</div>
+                <div class='role-desc'>Find your dream property with AI-powered matching</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Continue as Buyer →", key="btn_buyer", use_container_width=True):
+                st.session_state["selected_role"] = "BUYER"
+                st.rerun()
+
+        with col_broker:
+            st.markdown("""
+            <div class='role-card broker-card-role'>
+                <div class='role-icon'>🏢</div>
+                <div class='role-label'>I'm a Broker</div>
+                <div class='role-desc'>Manage leads, properties and buyer qualification</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Continue as Broker →", key="btn_broker", use_container_width=True):
+                st.session_state["selected_role"] = "BROKER"
+                st.rerun()
+
+        st.stop()
+
+    # ── STEP 2a: BUYER Sign-in / Sign-up ────────────────────────────────────
+    elif st.session_state["selected_role"] == "BUYER":
+        st.markdown("""
+        <div class='auth-header'>
+            <h2>🏡 Buyer Portal</h2>
+            <p>Sign in to find your perfect property</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("← Back to role selection", key="back_buyer"):
+            st.session_state["selected_role"] = None
+            st.rerun()
+
+        tab_login, tab_signup = st.tabs(["🔑 Sign In", "📝 Create Account"])
+
+        with tab_login:
+            st.markdown("#### Welcome back, Buyer!")
+            with st.form("buyer_login_form"):
+                b_email = st.text_input("📧 Email", placeholder="you@example.com")
+                b_pw    = st.text_input("🔒 Password", type="password")
+                b_sub   = st.form_submit_button("Sign In →", use_container_width=True)
+                if b_sub:
+                    if not b_email or not b_pw:
+                        st.error("Please fill in all fields.")
                     else:
-                        st.error(msg)
-                        
-    st.stop()  # Halt execution until authenticated
+                        user = authenticate_user(b_email, b_pw)
+                        if user and user["role"] == "BUYER":
+                            st.session_state["authenticated"] = True
+                            st.session_state["role"]          = user["role"]
+                            st.session_state["user_id"]       = user["user_id"]
+                            st.session_state["name"]          = user["name"]
+                            st.session_state["selected_role"] = None
+                            st.success(f"Welcome back, {user['name']}! 🎉")
+                            st.rerun()
+                        elif user and user["role"] == "BROKER":
+                            st.error("⚠️ This account is a Broker account. Please use the Broker portal.")
+                        else:
+                            st.error("❌ Invalid email or password. Please try again.")
+
+        with tab_signup:
+            st.markdown("#### Create your Buyer account")
+            with st.form("buyer_signup_form"):
+                su_name  = st.text_input("👤 Full Name")
+                su_phone = st.text_input("📞 Phone Number")
+                su_email = st.text_input("📧 Email", placeholder="you@example.com")
+                su_pw    = st.text_input("🔒 Password", type="password")
+                su_pw2   = st.text_input("🔒 Confirm Password", type="password")
+                su_sub   = st.form_submit_button("Create Buyer Account →", use_container_width=True)
+                if su_sub:
+                    if not su_name or not su_phone or not su_email or not su_pw:
+                        st.error("All fields are required.")
+                    elif su_pw != su_pw2:
+                        st.error("Passwords do not match.")
+                    else:
+                        ok, msg = create_user(su_name, su_phone, su_email, su_pw, role="BUYER")
+                        if ok:
+                            st.success("✅ Account created! Switch to the 'Sign In' tab to log in.")
+                        else:
+                            st.error(msg)
+
+        st.stop()
+
+    # ── STEP 2b: BROKER Sign-in ──────────────────────────────────────────────
+    elif st.session_state["selected_role"] == "BROKER":
+        st.markdown("""
+        <div class='auth-header'>
+            <h2>🏢 Broker Portal</h2>
+            <p>Sign in to manage leads &amp; properties</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("← Back to role selection", key="back_broker"):
+            st.session_state["selected_role"] = None
+            st.rerun()
+
+        st.markdown("#### Broker Sign In")
+        st.info("💡 **Default credentials:** `broker@admin.com` / `admin`")
+        with st.form("broker_login_form"):
+            br_email = st.text_input("📧 Broker Email", placeholder="broker@company.com")
+            br_pw    = st.text_input("🔒 Password", type="password")
+            br_sub   = st.form_submit_button("Sign In →", use_container_width=True)
+            if br_sub:
+                if not br_email or not br_pw:
+                    st.error("Please fill in all fields.")
+                else:
+                    user = authenticate_user(br_email, br_pw)
+                    if user and user["role"] == "BROKER":
+                        st.session_state["authenticated"] = True
+                        st.session_state["role"]          = user["role"]
+                        st.session_state["user_id"]       = user["user_id"]
+                        st.session_state["name"]          = user["name"]
+                        st.session_state["selected_role"] = None
+                        st.success(f"Welcome, {user['name']}! Redirecting to dashboard…")
+                        st.rerun()
+                    elif user and user["role"] == "BUYER":
+                        st.error("⚠️ This account is a Buyer account. Please use the Buyer portal.")
+                    else:
+                        st.error("❌ Invalid credentials. Contact your administrator.")
+
+        st.stop()  # Halt execution until authenticated
+
+
 
 # ─── Session State for App ────────────────────────────────────────────────────
 for key, default in [
