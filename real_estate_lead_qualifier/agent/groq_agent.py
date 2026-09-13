@@ -11,7 +11,7 @@ load_dotenv()
 
 _api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=_api_key)
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 REQUIRED_FIELDS = ["name", "phone", "budget_max", "location", "property_type", "bedrooms", "timeline_days"]
 

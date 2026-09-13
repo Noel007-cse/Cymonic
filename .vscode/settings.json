@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./real_estate_lead_qualifier"
+    ]
+}
