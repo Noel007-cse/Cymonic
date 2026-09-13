@@ -46,19 +46,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ─── Sidebar Navigation ───────────────────────────────────────────────────────
-st.sidebar.title("🏠 Real Estate\nLead Qualifier")
-st.sidebar.markdown("---")
-page = st.sidebar.radio(
-    "Navigation",
-    ["🏠 Buyer Chat", "📊 Broker Dashboard", "🏘️ Properties", "👥 Leads"],
-    label_visibility="collapsed"
-)
-st.sidebar.markdown("---")
-st.sidebar.caption("Powered by **Groq AI** • llama-3.3-70b")
-
 # ─── Session State ────────────────────────────────────────────────────────────
 for key, default in [
+    ("authenticated", False),
+    ("role", None),
     ("messages", []),
     ("buyer_state", {}),
     ("qualified", False),
@@ -70,30 +61,100 @@ for key, default in [
     if key not in st.session_state:
         st.session_state[key] = default
 
+# ─── Mock Login Screen ───────────────────────────────────────────────────────
+if not st.session_state.get("authenticated"):
+    st.sidebar.title("🏠 Real Estate Portal")
+    st.sidebar.markdown("---")
+    st.sidebar.info("👋 Welcome! Please log in to continue.")
+    st.sidebar.markdown("---")
+    st.sidebar.caption("Powered by **Groq AI**")
 
-# ── Helper: PyDynite live score widget ───────────────────────────────────────
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("<h2 style='text-align: center;'>🏠 Real Estate Portal</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: #666;'>Sign in with your demo account</p>", unsafe_allow_html=True)
+        st.write("")
+
+        with st.form("login_form"):
+            username = st.text_input("Username").strip().lower()
+            password = st.text_input("Password", type="password")
+            submit = st.form_submit_button("Log In", use_container_width=True)
+
+            if submit:
+                if username == "buyer" and password == "buyer123":
+                    st.session_state["authenticated"] = True
+                    st.session_state["role"] = "BUYER"
+                    st.rerun()
+                elif username == "broker" and password == "broker123":
+                    st.session_state["authenticated"] = True
+                    st.session_state["role"] = "BROKER"
+                    st.rerun()
+                else:
+                    st.error("Invalid username or password.")
+
+        st.markdown("""
+        <div style='background:#f8f9fa;padding:16px;border-radius:8px;border:1px solid #e9ecef;margin-top:16px;'>
+        <b>Demo Credentials:</b><br>
+        👤 <b>Buyer:</b> <code>buyer</code> / <code>buyer123</code><br>
+        🏢 <b>Broker:</b> <code>broker</code> / <code>broker123</code>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.stop()
+
+# ─── Authenticated Role-Based Sidebar Navigation ──────────────────────────────
+role = st.session_state.get("role")
+
+if role == "BUYER":
+    st.sidebar.title("🏠 Real Estate Assistant")
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("👤 **Logged in as:** `Buyer`")
+    st.sidebar.markdown("---")
+    if st.sidebar.button("🚪 Logout", use_container_width=True):
+        st.session_state["authenticated"] = False
+        st.session_state["role"] = None
+        st.rerun()
+    st.sidebar.markdown("---")
+    st.sidebar.caption("Powered by **Groq AI** • llama-3.3-70b")
+    page = "🏠 Buyer Chat"
+
+elif role == "BROKER":
+    st.sidebar.title("🏠 Broker Portal")
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("👤 **Logged in as:** `Broker`")
+    st.sidebar.markdown("---")
+    page = st.sidebar.radio(
+        "Navigation",
+        ["📊 Broker Dashboard", "🏘️ Properties", "👥 Leads"],
+        label_visibility="collapsed"
+    )
+    st.sidebar.markdown("---")
+    if st.sidebar.button("🚪 Logout", use_container_width=True):
+        st.session_state["authenticated"] = False
+        st.session_state["role"] = None
+        st.rerun()
+    st.sidebar.markdown("---")
+    st.sidebar.caption("Real Estate Broker Management")
+
+else:
+    st.session_state["authenticated"] = False
+    st.session_state["role"] = None
+    st.rerun()
+
+
+# ── Helper: Profile completeness widget ──────────────────────────────────────
 def render_pydynite_widget(buyer_state: dict):
     pds = compute_pydynite_score(buyer_state)
     answered = pds["answered"]
     total_q = pds["total_questions"]
-    score = pds["total"]
-    pct = score  # Already out of 100
 
-    # Color based on score
-    if pct >= 70:
-        color = "#00c853"
-    elif pct >= 40:
-        color = "#ff9800"
-    else:
-        color = "#f44336"
-
-    st.markdown(f"#### 📊 PyDynite Score")
+    st.markdown(f"#### 📋 Profile Completeness")
     st.markdown(
-        f"<div style='font-size:28px;font-weight:bold;color:{color}'>{score}/100</div>"
-        f"<div style='font-size:12px;color:#888'>{answered}/{total_q} questions answered</div>",
+        f"<div style='font-size:24px;font-weight:bold;color:#1e88e5'>{answered}/{total_q} Completed</div>"
+        f"<div style='font-size:12px;color:#888'>{round(answered/total_q*100)}% of requirements answered</div>",
         unsafe_allow_html=True,
     )
-    st.progress(min(pct / 100, 1.0))
+    st.progress(min(answered / total_q, 1.0))
 
     # Per-dimension breakdown (compact)
     dim_labels = {
@@ -114,7 +175,7 @@ def render_pydynite_widget(buyer_state: dict):
         pts = pds["scores"].get(key, 0)
         is_done = pts > 0
         badge_cls = "q-complete" if is_done else "q-pending"
-        badge_text = f"✓ {pts}pts" if is_done else "○ pending"
+        badge_text = "✓ done" if is_done else "○ pending"
         st.markdown(
             f"<span class='pydynite-badge {badge_cls}'>{label} {badge_text}</span>",
             unsafe_allow_html=True,
@@ -152,6 +213,10 @@ def render_broker_cards(matched_properties: list):
 # PAGE: BUYER CHAT
 # ══════════════════════════════════════════════════════════════════════════════
 if page == "🏠 Buyer Chat":
+    if st.session_state.get("role") != "BUYER":
+        st.error("Unauthorized access: Buyer role required.")
+        st.stop()
+
     st.title("🏠 Real Estate Assistant")
     st.caption("Answer 12 quick questions and we'll match your perfect property — instantly.")
 
@@ -275,10 +340,8 @@ if page == "🏠 Buyer Chat":
         # Quick result preview
         if st.session_state.qualified and st.session_state.qualification_result:
             st.markdown("---")
-            qr = st.session_state.qualification_result
-            emoji = get_status_emoji(qr["status"])
-            st.markdown(f"**Result:** {emoji} {qr['status'].replace('_', ' ')}")
-            st.metric("Score", f"{qr['qualification_score']}/100")
+            st.markdown("#### 📋 Enquiry Status")
+            st.success("🟢 Active Enquiry")
             if st.session_state.matched_properties:
                 best = st.session_state.matched_properties[0]
                 st.markdown(f"**Best Match:** {best['match_score']:.0f}%")
@@ -290,13 +353,11 @@ if page == "🏠 Buyer Chat":
         st.markdown("---")
         qr = st.session_state.qualification_result
         state = st.session_state.buyer_state
-        status = qr["status"]
-        emoji = get_status_emoji(status)
         name = state.get("name", "Buyer")
 
-        if status in ("HIGHLY_QUALIFIED", "QUALIFIED"):
-            st.success(f"🎉 Congratulations {name}! You're a **{status.replace('_', ' ').title()}**.\nWe found properties matching your requirements.")
-        elif status == "NO_MATCH":
+        if st.session_state.matched_properties:
+            st.success(f"🎉 Great news, {name}! We found properties matching your requirements.")
+        else:
             st.warning("⚠️ NO SUITABLE MATCH FOUND")
 
         r1, r2, r3 = st.columns(3)
@@ -320,38 +381,30 @@ if page == "🏠 Buyer Chat":
 | **Parking** | {state.get('parking', 'N/A')} |
 | **Financing** | {state.get('financing', 'N/A')} |
 | **Amenities** | {amenities_display} |
-| **Status** | {emoji} {status.replace('_', ' ')} |
+| **Status** | 🟢 Active Enquiry |
 """)
 
         with r2:
-            st.markdown("#### 📊 PyDynite Qualification")
-            st.metric("Qualification Score", f"{qr['qualification_score']}/100")
-            st.write(f"**Priority:** {get_priority_badge(qr['priority'])}")
-            st.write(f"**Next Action:** {qr['next_action'].replace('_', ' ')}")
-            st.markdown("**Score Breakdown:**")
-            # Map dimension names to max values for progress
-            dimension_max = {
-                "Budget Clarity": 20,
-                "Location Clarity": 10,
-                "Property Requirement": 10,
-                "Purchase Timeline": 15,
-                "Property Match": 20,
-                "Engagement": 10,
-                "Purpose & Financing": 10,
-                "Size & Amenities": 5,
-            }
-            for k, v in qr["score_breakdown"].items():
-                max_v = dimension_max.get(k, 20)
-                pct = int(v / max_v * 100) if max_v else 0
-                st.progress(min(pct, 100) / 100, text=f"{k}: {v}/{max_v}")
+            st.markdown("#### 📬 Enquiry Status")
+            st.info("✅ **Enquiry Registered**")
+            st.markdown("""
+**Next Steps for You:**
+- 🔍 Browse your personalized property matches below.
+- 📞 View broker contact numbers assigned to your preferred listings.
+- 📅 A verified broker will reach out to schedule site visits.
+""")
 
         with r3:
-            st.markdown("#### 💡 Why this decision?")
-            for r in qr.get("reasoning", []):
-                st.markdown(r)
-            tags = qr.get("tags", [])
-            if tags:
-                st.markdown("**Tags:** " + " · ".join([f"`{t}`" for t in tags]))
+            st.markdown("#### 🎯 Match Highlights")
+            if st.session_state.matched_properties:
+                best = st.session_state.matched_properties[0]
+                st.markdown(f"**Top Match:** {best['property_name']}")
+                st.markdown(f"**Location:** {best['location']}")
+                if best.get("explanation"):
+                    for p in best["explanation"].get("positives", []):
+                        st.markdown(f"✓ {p}")
+            else:
+                st.info("We are continuing to search for matching properties.")
 
         # ── Broker Contact Numbers ────────────────────────────────────────────
         if st.session_state.matched_properties:
@@ -497,6 +550,10 @@ if page == "🏠 Buyer Chat":
 # PAGE: BROKER DASHBOARD
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "📊 Broker Dashboard":
+    if st.session_state.get("role") != "BROKER":
+        st.error("Unauthorized access: Broker role required.")
+        st.stop()
+
     st.title("📊 Broker Dashboard")
     st.caption("Real-time lead management and buyer qualification overview")
 
@@ -604,6 +661,10 @@ elif page == "📊 Broker Dashboard":
 # PAGE: PROPERTIES
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "🏘️ Properties":
+    if st.session_state.get("role") != "BROKER":
+        st.error("Unauthorized access: Broker role required.")
+        st.stop()
+
     st.title("🏘️ Property Database")
     properties_df = load_properties()
 
@@ -650,6 +711,10 @@ elif page == "🏘️ Properties":
 # PAGE: LEADS
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "👥 Leads":
+    if st.session_state.get("role") != "BROKER":
+        st.error("Unauthorized access: Broker role required.")
+        st.stop()
+
     st.title("👥 All Leads")
     buyers_df = load_buyers()
 
