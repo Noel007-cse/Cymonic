@@ -1,12 +1,31 @@
-import pandas as pd
 import os
+import pandas as pd
 from datetime import datetime
+from dotenv import load_dotenv
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-BUYERS_CSV = os.path.join(DATA_DIR, "buyers.csv")
-PROPERTIES_CSV = os.path.join(DATA_DIR, "properties.csv")
+load_dotenv()
 
+# ── Supabase client ───────────────────────────────────────────────────────────
+SUPABASE_URL = os.getenv("SUPABASE_URL", "")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
+
+_supabase_client = None
+
+
+def get_supabase():
+    """Lazy-initialise and return the Supabase client."""
+    global _supabase_client
+    if _supabase_client is None:
+        if not SUPABASE_URL or not SUPABASE_KEY:
+            raise RuntimeError(
+                "SUPABASE_URL and SUPABASE_KEY must be set in your .env file."
+            )
+        from supabase import create_client
+        _supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    return _supabase_client
+
+
+# ── Column definitions (kept for reference / fallback) ───────────────────────
 BUYERS_COLUMNS = [
     "buyer_id", "name", "phone", "email", "budget", "budget_min", "budget_max",
     "location", "property_type", "bedrooms", "timeline", "timeline_days",
@@ -16,21 +35,34 @@ BUYERS_COLUMNS = [
 ]
 
 
+# ── Properties ────────────────────────────────────────────────────────────────
+
 def load_properties() -> pd.DataFrame:
+    """Load all properties from Supabase."""
     try:
-        df = pd.read_csv(PROPERTIES_CSV)
-        df.columns = df.columns.str.strip()
-        df["price"] = pd.to_numeric(df["price"], errors="coerce").fillna(0)
-        df["bedrooms"] = pd.to_numeric(df["bedrooms"], errors="coerce").fillna(0).astype(int)
-        df["bathrooms"] = pd.to_numeric(df["bathrooms"], errors="coerce").fillna(0).astype(int)
-        df["area_sqft"] = pd.to_numeric(df["area_sqft"], errors="coerce").fillna(0).astype(int)
-        # Add broker columns if not present
+        sb = get_supabase()
+        response = sb.table("properties").select("*").execute()
+        data = response.data or []
+        if not data:
+            return pd.DataFrame(columns=[
+                "property_id", "property_name", "property_type", "location",
+                "price", "bedrooms", "bathrooms", "area_sqft", "parking",
+                "furnishing", "floor", "total_floors", "property_age",
+                "possession", "amenities", "description", "availability",
+                "broker_name", "broker_phone",
+            ])
+        df = pd.DataFrame(data)
+        df["price"] = pd.to_numeric(df.get("price", 0), errors="coerce").fillna(0)
+        df["bedrooms"] = pd.to_numeric(df.get("bedrooms", 0), errors="coerce").fillna(0).astype(int)
+        df["bathrooms"] = pd.to_numeric(df.get("bathrooms", 0), errors="coerce").fillna(0).astype(int)
+        df["area_sqft"] = pd.to_numeric(df.get("area_sqft", 0), errors="coerce").fillna(0).astype(int)
         if "broker_phone" not in df.columns:
             df["broker_phone"] = ""
         if "broker_name" not in df.columns:
             df["broker_name"] = ""
         return df
-    except FileNotFoundError:
+    except Exception as e:
+        print(f"[Supabase] load_properties error: {e}")
         return pd.DataFrame(columns=[
             "property_id", "property_name", "property_type", "location",
             "price", "bedrooms", "bathrooms", "area_sqft", "parking",
@@ -40,16 +72,24 @@ def load_properties() -> pd.DataFrame:
         ])
 
 
+# ── Buyers ────────────────────────────────────────────────────────────────────
+
 def load_buyers() -> pd.DataFrame:
+    """Load all buyers/leads from Supabase."""
     try:
-        df = pd.read_csv(BUYERS_CSV)
-        df.columns = df.columns.str.strip()
-        return df
-    except FileNotFoundError:
+        sb = get_supabase()
+        response = sb.table("buyers").select("*").order("created_at", desc=True).execute()
+        data = response.data or []
+        if not data:
+            return pd.DataFrame(columns=BUYERS_COLUMNS)
+        return pd.DataFrame(data)
+    except Exception as e:
+        print(f"[Supabase] load_buyers error: {e}")
         return pd.DataFrame(columns=BUYERS_COLUMNS)
 
 
 def generate_buyer_id(buyers_df: pd.DataFrame) -> str:
+    """Generate the next sequential buyer ID."""
     if buyers_df.empty:
         return "B001"
     nums = []
@@ -62,10 +102,12 @@ def generate_buyer_id(buyers_df: pd.DataFrame) -> str:
 
 
 def save_buyer(buyer_state: dict, qualification_result: dict) -> str:
-    buyers_df = load_buyers()
+    """
+    Upsert a buyer lead into Supabase.
+    Matches on name (case-insensitive). Returns the buyer_id.
+    """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     name = buyer_state.get("name", "")
-    phone = buyer_state.get("phone", "")
     budget_max = buyer_state.get("budget_max", 0) or 0
     budget_min = buyer_state.get("budget_min", 0) or 0
     timeline_days = buyer_state.get("timeline_days", 0) or 0
@@ -79,7 +121,6 @@ def save_buyer(buyer_state: dict, qualification_result: dict) -> str:
     else:
         timeline_str = ""
 
-    # Serialize amenities list to string for CSV
     amenities = buyer_state.get("amenities") or []
     if isinstance(amenities, list):
         amenities_str = ", ".join(amenities)
@@ -88,7 +129,7 @@ def save_buyer(buyer_state: dict, qualification_result: dict) -> str:
 
     buyer_row = {
         "name": name,
-        "phone": phone,
+        "phone": buyer_state.get("phone", ""),
         "email": buyer_state.get("email", ""),
         "budget": budget_max,
         "budget_min": budget_min,
@@ -113,26 +154,32 @@ def save_buyer(buyer_state: dict, qualification_result: dict) -> str:
         "updated_at": now,
     }
 
-    # Check if buyer already exists
-    mask = None
-    if name and not buyers_df.empty and "name" in buyers_df.columns:
-        mask = buyers_df["name"].str.lower() == name.lower()
+    try:
+        sb = get_supabase()
 
-    if mask is not None and mask.any():
-        idx = buyers_df[mask].index[0]
-        buyer_id = buyers_df.loc[idx, "buyer_id"]
-        for col, val in buyer_row.items():
-            buyers_df.loc[idx, col] = val
-    else:
-        buyer_id = generate_buyer_id(buyers_df)
-        buyer_row["buyer_id"] = buyer_id
-        buyer_row["created_at"] = now
-        buyers_df = pd.concat([buyers_df, pd.DataFrame([buyer_row])], ignore_index=True)
+        # Check if buyer already exists by name
+        existing = sb.table("buyers").select("buyer_id").ilike("name", name).execute()
 
-    os.makedirs(DATA_DIR, exist_ok=True)
-    buyers_df.to_csv(BUYERS_CSV, index=False)
-    return buyer_id
+        if existing.data:
+            buyer_id = existing.data[0]["buyer_id"]
+            sb.table("buyers").update(buyer_row).eq("buyer_id", buyer_id).execute()
+        else:
+            # Generate next ID from current max
+            all_buyers = sb.table("buyers").select("buyer_id").execute()
+            df_ids = pd.DataFrame(all_buyers.data or [])
+            buyer_id = generate_buyer_id(df_ids)
+            buyer_row["buyer_id"] = buyer_id
+            buyer_row["created_at"] = now
+            sb.table("buyers").insert(buyer_row).execute()
 
+        return buyer_id
+
+    except Exception as e:
+        print(f"[Supabase] save_buyer error: {e}")
+        return "B000"
+
+
+# ── Dashboard stats ───────────────────────────────────────────────────────────
 
 def get_dashboard_stats(buyers_df: pd.DataFrame) -> dict:
     stats = {
