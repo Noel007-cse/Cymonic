@@ -1,0 +1,111 @@
+property_id,property_name,property_type,location,price,bedrooms,bathrooms,area_sqft,parking,furnishing,floor,total_floors,property_age,possession,amenities,description,availability
+P001,Green Valley Residency,Apartment,Kakkanad,7500000,3,3,1650,Yes,Semi-Furnished,8,15,3,Ready,Gym|Parking|Security|Pool,Modern 3BHK apartment near Infopark,Available
+P002,Sunrise Heights,Apartment,Kakkanad,6800000,2,2,1200,Yes,Unfurnished,4,12,1,Ready,Parking|Security|Lift,Spacious 2BHK in Kakkanad tech hub,Available
+P003,Palm Gardens Villa,Villa,Edappally,12000000,4,4,2800,Yes,Fully Furnished,1,2,5,Ready,Pool|Garden|Security|Parking,Luxury 4BHK villa with private pool,Available
+P004,City Heights,Apartment,Ernakulam,4500000,2,2,1050,No,Unfurnished,3,8,7,Ready,Security|Lift,Affordable 2BHK in city center,Available
+P005,Harmony Towers,Apartment,Thrissur,5500000,3,2,1400,Yes,Semi-Furnished,5,10,2,Ready,Gym|Parking|Security,3BHK with modern amenities,Available
+P006,The Pearl Penthouse,Penthouse,Kochi,25000000,5,5,4200,Yes,Fully Furnished,20,20,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Premium penthouse with sea view,Available
+P007,Budget Homes,Apartment,Aluva,3000000,1,1,650,No,Unfurnished,2,5,10,Ready,Security,Affordable 1BHK starter home,Available
+P008,Lakeview Residency,Apartment,Vyttila,6200000,2,2,1150,Yes,Semi-Furnished,6,14,2,Ready,Parking|Security|Lift|Power Backup,2BHK near Vyttila mobility hub,Available
+P009,Elite Homes,Apartment,Palarivattom,7200000,3,2,1550,Yes,Semi-Furnished,7,12,4,Ready,Gym|Parking|Security|Lift,3BHK in premium Palarivattom area,Available
+P010,Garden Enclave,Villa,Thrissur,9500000,3,3,2200,Yes,Semi-Furnished,1,2,3,Ready,Garden|Parking|Security,3BHK independent villa with garden,Available
+P011,Infopark View,Apartment,Kakkanad,8200000,3,3,1750,Yes,Fully Furnished,10,16,2,Ready,Gym|Pool|Parking|Security|Clubhouse,Luxury 3BHK with Infopark view,Available
+P012,Hill Top Villas,Villa,Kottayam,11000000,4,3,2600,Yes,Semi-Furnished,1,2,4,Ready,Garden|Parking|Security|Pool,Scenic 4BHK villa in Kottayam,Available
+P013,Riverside Apartments,Apartment,Ernakulam,5200000,2,2,1100,Yes,Unfurnished,5,10,6,Ready,Parking|Security|Lift,2BHK with river view,Available
+P014,Studio Nest,Studio,Edappally,2800000,1,1,500,No,Fully Furnished,3,12,1,Ready,Security|Lift|Power Backup,Cozy furnished studio apartment,Available
+P015,Maple Residency,Apartment,Thrissur,6500000,3,2,1450,Yes,Unfurnished,4,9,3,Ready,Parking|Security|Gym,Spacious 3BHK in prime Thrissur,Available
+P016,Coastal Villas,Villa,Kochi,18000000,5,4,3800,Yes,Fully Furnished,1,3,2,Ready,Pool|Garden|Security|Parking,5BHK beach-facing luxury villa,Available
+P017,Tech Park Homes,Apartment,Kakkanad,7600000,3,2,1580,Yes,Semi-Furnished,9,14,1,Ready,Gym|Parking|Security|Lift|Pool,3BHK walking distance to Infopark,Available
+P018,Silver Heights,Apartment,Kalamassery,5800000,2,2,1200,Yes,Semi-Furnished,6,12,3,Ready,Parking|Security|Lift,Modern 2BHK in Kalamassery,Available
+P019,Grand Residency,Apartment,Ernakulam,9000000,4,3,2000,Yes,Fully Furnished,12,18,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Premium 4BHK in Ernakulam,Available
+P020,Tranquil Homes,Apartment,Angamaly,4200000,2,2,1000,Yes,Unfurnished,3,8,5,Ready,Parking|Security,Peaceful 2BHK in Angamaly,Available
+P021,Prestige Towers,Apartment,Palarivattom,8800000,3,3,1800,Yes,Fully Furnished,14,18,2,Ready,Gym|Pool|Parking|Security|Clubhouse,Upscale 3BHK in Palarivattom,Available
+P022,Emerald Gardens,Villa,Thrissur,13500000,4,4,3000,Yes,Semi-Furnished,1,2,2,Ready,Garden|Pool|Parking|Security,Elegant 4BHK villa with garden,Available
+P023,Skyline Apartments,Apartment,Kochi,10500000,3,3,1900,Yes,Fully Furnished,16,20,1,Ready,Pool|Gym|Parking|Security,High-rise 3BHK with city skyline view,Available
+P024,Budget Plus,Apartment,Perumbavoor,2500000,1,1,600,No,Unfurnished,2,6,8,Ready,Security,Economical 1BHK in Perumbavoor,Available
+P025,Riviera Row Houses,Row House,Edappally,8500000,3,3,1900,Yes,Unfurnished,1,1,3,Ready,Parking|Security|Garden,Stylish 3BHK row house,Available
+P026,Vyttila Metro Homes,Apartment,Vyttila,7000000,3,2,1500,Yes,Semi-Furnished,8,15,2,Ready,Parking|Security|Lift|Gym,3BHK near Vyttila metro station,Available
+P027,Kaloor Heights,Apartment,Ernakulam,8000000,3,3,1700,Yes,Semi-Furnished,11,15,4,Ready,Gym|Parking|Security|Lift,Premium 3BHK in Kaloor area,Available
+P028,Tranquility Villas,Villa,Kottayam,9800000,3,3,2400,Yes,Fully Furnished,1,2,5,Ready,Garden|Parking|Pool|Security,3BHK villa with scenic backwater views,Available
+P029,Nest Apartments,Apartment,Aluva,3800000,2,1,900,No,Unfurnished,2,6,6,Ready,Security|Lift,Cozy 2BHK in Aluva,Available
+P030,Metro Suites,Studio,Kochi,3500000,1,1,550,Yes,Fully Furnished,5,20,1,Ready,Pool|Gym|Parking|Security,Luxury studio in heart of Kochi,Available
+P031,Kakkanad Greens,Apartment,Kakkanad,6200000,2,2,1250,Yes,Semi-Furnished,5,11,3,Ready,Gym|Parking|Security|Lift,2BHK apartment in IT corridor,Available
+P032,Maradu Residency,Apartment,Maradu,7100000,3,2,1520,Yes,Semi-Furnished,7,12,2,Ready,Parking|Security|Gym|Lift,3BHK in serene Maradu,Available
+P033,Golden Palms,Villa,Palakkad,7500000,3,3,2100,Yes,Unfurnished,1,2,4,Ready,Garden|Parking|Security,Spacious 3BHK villa in Palakkad,Available
+P034,Trivandrum Towers,Apartment,Trivandrum,6000000,3,2,1400,Yes,Semi-Furnished,6,12,3,Ready,Gym|Parking|Security|Lift,Modern 3BHK in Trivandrum,Available
+P035,Calicut Comfort,Apartment,Calicut,5000000,2,2,1100,Yes,Unfurnished,4,9,5,Ready,Parking|Security|Lift,Comfortable 2BHK in Calicut,Available
+P036,Thripunithura Heights,Apartment,Thripunithura,5500000,2,2,1200,Yes,Semi-Furnished,6,10,3,Ready,Parking|Security|Gym,2BHK in heritage Thripunithura,Available
+P037,Luxury Lane,Villa,Kochi,22000000,5,5,4000,Yes,Fully Furnished,1,3,2,Ready,Pool|Garden|Gym|Security|Parking,Ultra-luxury 5BHK villa,Available
+P038,Palarivattom Prime,Apartment,Palarivattom,6800000,2,2,1300,Yes,Semi-Furnished,8,14,1,Ready,Gym|Parking|Security|Lift,2BHK in prime Palarivattom location,Available
+P039,Kochi Row Villa,Row House,Kochi,9200000,3,3,2000,Yes,Semi-Furnished,1,1,3,Ready,Parking|Security|Garden,3BHK row house in Kochi,Available
+P040,Angamaly Classic,Apartment,Angamaly,3500000,1,1,700,No,Unfurnished,1,6,7,Ready,Security,Starter 1BHK in Angamaly,Available
+P041,Edappally Nest,Apartment,Edappally,6900000,3,2,1480,Yes,Semi-Furnished,7,12,2,Ready,Parking|Security|Gym|Lift,3BHK near Edappally junction,Available
+P042,Vaikom Villas,Villa,Vaikom,8200000,3,3,2300,Yes,Unfurnished,1,2,6,Ready,Garden|Parking|Security,3BHK villa with lakeside setting,Available
+P043,Kalamassery Compact,Apartment,Kalamassery,4800000,2,1,980,Yes,Unfurnished,3,8,5,Ready,Parking|Security,Compact 2BHK in industrial hub,Available
+P044,Smart Homes Kochi,Apartment,Kochi,11500000,4,3,2200,Yes,Fully Furnished,15,20,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Smart 4BHK premium apartment,Available
+P045,Thrissur Nest,Apartment,Thrissur,4500000,2,2,1000,No,Unfurnished,2,7,6,Ready,Security|Lift,Affordable 2BHK in Thrissur,Available
+P046,Perumbavoor Heights,Apartment,Perumbavoor,3200000,2,1,800,No,Unfurnished,2,5,4,Ready,Security,Budget 2BHK in Perumbavoor,Available
+P047,Tripunithura Towers,Apartment,Thrippunithura,6600000,3,2,1450,Yes,Semi-Furnished,7,12,3,Ready,Parking|Security|Gym,3BHK in Royal Tripunithura,Available
+P048,Kottayam Classic,Independent House,Kottayam,7000000,3,2,1800,Yes,Unfurnished,1,2,8,Ready,Garden|Parking|Security,Traditional 3BHK independent house,Available
+P049,Kakkanad Studio,Studio,Kakkanad,2200000,1,1,450,No,Fully Furnished,4,10,1,Ready,Security|Lift,Modern studio near tech parks,Available
+P050,Calicut Premium,Apartment,Calicut,7200000,3,3,1600,Yes,Semi-Furnished,8,14,2,Ready,Gym|Parking|Security|Lift,Premium 3BHK in Calicut,Available
+P051,Trivandrum Villa,Villa,Trivandrum,10500000,4,3,2500,Yes,Semi-Furnished,1,2,3,Ready,Garden|Pool|Parking|Security,Spacious 4BHK villa in Trivandrum,Available
+P052,Technopark Nest,Apartment,Trivandrum,5200000,2,2,1100,Yes,Semi-Furnished,5,10,2,Ready,Parking|Security|Lift,2BHK near Technopark,Available
+P053,Maradu Luxury,Apartment,Maradu,9500000,4,3,2100,Yes,Fully Furnished,13,18,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Luxury 4BHK in Maradu,Available
+P054,Palakkad Comfort,Independent House,Palakkad,5500000,2,2,1500,Yes,Unfurnished,1,2,10,Ready,Garden|Parking,Traditional 2BHK house in Palakkad,Available
+P055,Calicut Row House,Row House,Calicut,8000000,3,3,1950,Yes,Semi-Furnished,1,1,4,Ready,Parking|Security|Garden,3BHK row house in Calicut,Available
+P056,Pathanamthitta Home,Independent House,Pathanamthitta,4800000,3,2,1600,Yes,Unfurnished,1,2,7,Ready,Garden|Parking,3BHK house in peaceful Pathanamthitta,Available
+P057,Aluva Eco Homes,Apartment,Aluva,4500000,2,2,1050,Yes,Unfurnished,4,8,4,Ready,Parking|Security|Lift|Garden,Eco-friendly 2BHK in Aluva,Available
+P058,Shoranur Villa,Villa,Shoranur,6500000,3,3,2000,Yes,Unfurnished,1,2,5,Ready,Garden|Parking|Security,3BHK villa in quiet Shoranur,Available
+P059,Pala Residency,Apartment,Pala,3800000,2,1,900,No,Unfurnished,2,5,6,Ready,Security,2BHK apartment in Pala,Available
+P060,Ottapalam Heights,Apartment,Ottapalam,3500000,2,1,850,No,Unfurnished,2,5,5,Ready,Parking|Security,Budget 2BHK in Ottapalam,Available
+P061,Kochi Business Bay,Apartment,Kochi,14500000,4,4,2800,Yes,Fully Furnished,18,22,1,Ready,Pool|Gym|Parking|Security|Spa,Elite 4BHK in marine drive vicinity,Available
+P062,Changanacherry Nest,Independent House,Changanacherry,5200000,3,2,1700,Yes,Unfurnished,1,2,8,Ready,Garden|Parking,Comfortable 3BHK in Changanacherry,Available
+P063,Kakkanad Prime View,Apartment,Kakkanad,8900000,3,3,1800,Yes,Fully Furnished,11,16,1,Ready,Gym|Pool|Parking|Security|Clubhouse,Premium 3BHK with panoramic view,Available
+P064,Edappally Elite,Apartment,Edappally,8000000,3,3,1720,Yes,Fully Furnished,10,15,2,Ready,Pool|Gym|Parking|Security,Elite 3BHK in Edappally,Available
+P065,Perumbavoor Villa,Villa,Perumbavoor,6000000,3,2,1900,Yes,Unfurnished,1,2,6,Ready,Garden|Parking|Security,3BHK villa in Perumbavoor,Available
+P066,Thrissur Grand,Apartment,Thrissur,7500000,3,3,1650,Yes,Semi-Furnished,9,14,2,Ready,Gym|Parking|Security|Lift,Grand 3BHK in Thrissur city,Available
+P067,Trivandrum Classic,Apartment,Trivandrum,4800000,2,2,1100,Yes,Semi-Furnished,5,10,4,Ready,Parking|Security|Lift,Classic 2BHK in Trivandrum,Available
+P068,Vyttila Compact,Apartment,Vyttila,5500000,2,2,1100,Yes,Unfurnished,4,11,3,Ready,Parking|Security|Lift,2BHK near metro junction,Available
+P069,Kozhikode Heights,Apartment,Kozhikode,6200000,3,2,1400,Yes,Semi-Furnished,7,12,2,Ready,Parking|Security|Gym|Lift,3BHK in Kozhikode city,Available
+P070,Kochi Penthouse Suite,Penthouse,Kochi,20000000,4,4,3500,Yes,Fully Furnished,22,22,1,Ready,Pool|Gym|Parking|Security|Concierge,Penthouse with 360 degree view,Available
+P071,Angamaly Heights,Apartment,Angamaly,5000000,2,2,1100,Yes,Semi-Furnished,5,9,3,Ready,Parking|Security|Gym,2BHK in growing Angamaly,Available
+P072,Kalamassery Premium,Apartment,Kalamassery,6500000,3,2,1450,Yes,Semi-Furnished,7,12,2,Ready,Gym|Parking|Security|Lift,3BHK in CSEZ vicinity,Available
+P073,Maradu Garden View,Apartment,Maradu,6000000,2,2,1250,Yes,Semi-Furnished,6,10,3,Ready,Garden|Parking|Security|Lift,2BHK with garden view in Maradu,Available
+P074,Thrissur Budget Flat,Apartment,Thrissur,3200000,1,1,650,No,Unfurnished,2,6,9,Ready,Security,Starter flat in Thrissur,Available
+P075,Ernakulam Premium,Apartment,Ernakulam,10000000,4,3,2100,Yes,Fully Furnished,14,18,2,Ready,Pool|Gym|Parking|Security,Premium 4BHK near Broadway,Available
+P076,Palarivattom Studio,Studio,Palarivattom,2600000,1,1,480,No,Fully Furnished,3,10,2,Ready,Security|Lift,Fully furnished studio in Palarivattom,Available
+P077,Kottayam Riverside,Villa,Kottayam,12500000,4,4,2900,Yes,Fully Furnished,1,2,3,Ready,Pool|Garden|Parking|Security,4BHK villa with river view,Available
+P078,Shoranur Comfort,Apartment,Shoranur,3500000,2,1,850,No,Unfurnished,2,5,6,Ready,Parking|Security,Comfortable 2BHK in Shoranur,Available
+P079,Kakkanad Luxury Tower,Apartment,Kakkanad,11000000,4,3,2200,Yes,Fully Furnished,15,18,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Luxury 4BHK in Kakkanad,Available
+P080,Edappally Row House,Row House,Edappally,9800000,4,3,2200,Yes,Semi-Furnished,1,1,2,Ready,Garden|Parking|Security,4BHK row house in Edappally,Available
+P081,Calicut Comfort Plus,Apartment,Calicut,4500000,2,1,1000,Yes,Unfurnished,4,8,4,Ready,Parking|Security,2BHK in calm Calicut neighborhood,Available
+P082,Chalakudy Home,Independent House,Chalakudy,4200000,3,2,1600,Yes,Unfurnished,1,2,9,Ready,Garden|Parking,Homely 3BHK in Chalakudy,Available
+P083,Irinjalakuda Flat,Apartment,Irinjalakuda,3600000,2,1,850,No,Unfurnished,2,5,7,Ready,Security,2BHK budget flat in Irinjalakuda,Available
+P084,Aluva Prime Towers,Apartment,Aluva,5500000,3,2,1350,Yes,Semi-Furnished,6,10,3,Ready,Gym|Parking|Security|Lift,3BHK near Aluva metro,Available
+P085,Kochi Smart Studio,Studio,Kochi,4000000,1,1,600,Yes,Fully Furnished,8,20,1,Ready,Pool|Gym|Security|Parking,Smart studio with premium amenities,Available
+P086,Thripunithura Classic,Apartment,Thripunithura,5800000,3,2,1380,Yes,Semi-Furnished,5,9,4,Ready,Parking|Security|Gym,3BHK near Thripunithura palace,Available
+P087,Ernakulam Budget Flat,Apartment,Ernakulam,3800000,1,1,700,No,Unfurnished,2,7,8,Ready,Security|Lift,Budget 1BHK in Ernakulam,Available
+P088,Trivandrum Elite,Apartment,Trivandrum,8500000,3,3,1700,Yes,Fully Furnished,10,15,2,Ready,Pool|Gym|Parking|Security,Elite 3BHK in Trivandrum,Available
+P089,Kakkanad Budget Flat,Apartment,Kakkanad,4200000,1,1,700,No,Unfurnished,3,8,5,Ready,Parking|Security,Affordable 1BHK in Kakkanad IT zone,Available
+P090,Pathanamthitta Villa,Villa,Pathanamthitta,7500000,3,3,2100,Yes,Unfurnished,1,2,5,Ready,Garden|Parking|Security,3BHK villa in Pathanamthitta,Available
+P091,Thrissur Row House,Row House,Thrissur,7000000,3,2,1800,Yes,Unfurnished,1,1,5,Ready,Parking|Security|Garden,3BHK row house in Thrissur,Available
+P092,Vyttila Studio,Studio,Vyttila,2900000,1,1,500,Yes,Fully Furnished,4,12,2,Ready,Security|Lift|Power Backup,Furnished studio near metro,Available
+P093,Palakkad Budget Flat,Apartment,Palakkad,2800000,1,1,620,No,Unfurnished,2,5,9,Ready,Security,Budget 1BHK in Palakkad,Available
+P094,Kochi Compact,Apartment,Kochi,5800000,2,2,1150,Yes,Semi-Furnished,7,14,3,Ready,Parking|Security|Lift,2BHK in central Kochi,Available
+P095,Palarivattom Heights,Apartment,Palarivattom,9200000,4,3,2000,Yes,Fully Furnished,13,16,1,Ready,Pool|Gym|Parking|Security,Luxury 4BHK in Palarivattom,Available
+P096,Kottayam Budget Flat,Apartment,Kottayam,3000000,1,1,660,No,Unfurnished,1,5,10,Ready,Security,Budget 1BHK in Kottayam,Available
+P097,Calicut Grand Tower,Apartment,Calicut,8200000,3,3,1750,Yes,Fully Furnished,11,16,1,Ready,Gym|Pool|Parking|Security,Grand 3BHK in Calicut,Available
+P098,Changanacherry Villa,Villa,Changanacherry,9000000,4,3,2400,Yes,Semi-Furnished,1,2,4,Ready,Garden|Pool|Parking|Security,4BHK villa in Changanacherry,Available
+P099,Kakkanad Penthouse,Penthouse,Kakkanad,16000000,4,4,3200,Yes,Fully Furnished,18,18,1,Ready,Pool|Gym|Parking|Security|Spa,Penthouse with Infopark view,Available
+P100,Ernakulam Row House,Row House,Ernakulam,10500000,4,3,2300,Yes,Semi-Furnished,1,1,2,Ready,Garden|Parking|Security,4BHK row house in Ernakulam,Sold
+P101,Aluva Budget Flat,Apartment,Aluva,2700000,1,1,580,No,Unfurnished,1,5,11,Ready,Security,Budget 1BHK in Aluva,Available
+P102,Kakkanad Tech View,Apartment,Kakkanad,7300000,3,2,1560,Yes,Semi-Furnished,8,13,2,Ready,Gym|Parking|Security|Lift,3BHK with tech park view,Available
+P103,Maradu Classic,Apartment,Maradu,5200000,2,2,1150,Yes,Unfurnished,4,9,5,Ready,Parking|Security,Classic 2BHK in Maradu,Available
+P104,Thrissur Premium Villa,Villa,Thrissur,14000000,5,4,3200,Yes,Fully Furnished,1,2,2,Ready,Pool|Garden|Gym|Parking|Security,Premium 5BHK villa in Thrissur,Reserved
+P105,Trivandrum Budget,Apartment,Trivandrum,3500000,1,1,650,No,Unfurnished,2,6,7,Ready,Security,Budget 1BHK in Trivandrum,Available
+P106,Edappally Luxury,Apartment,Edappally,9500000,4,3,2050,Yes,Fully Furnished,14,17,1,Ready,Pool|Gym|Parking|Security|Clubhouse,Luxury 4BHK in Edappally,Available
+P107,Kochi Central Flat,Apartment,Kochi,6500000,2,2,1200,Yes,Semi-Furnished,7,15,3,Ready,Gym|Parking|Security|Lift,2BHK in heart of Kochi,Available
+P108,Perumbavoor Budget,Apartment,Perumbavoor,2600000,1,1,580,No,Unfurnished,1,4,9,Ready,Security,Starter 1BHK in Perumbavoor,Reserved
+P109,Kakkanad Budget Tower,Apartment,Kakkanad,5500000,2,2,1200,Yes,Unfurnished,5,10,4,Ready,Parking|Security|Lift,2BHK budget flat near IT hub,Available
+P110,Calicut Luxury Villa,Villa,Calicut,15500000,5,4,3400,Yes,Fully Furnished,1,2,2,Ready,Pool|Garden|Gym|Parking|Security,Luxury 5BHK villa in Calicut,Sold

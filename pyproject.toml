@@ -1,0 +1,25 @@
+[project]
+name = "cymonic"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "abhinav-e-p-b", email = "abhinavepb92@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "langchain>=1.4.0",
+    "langgraph>=1.2.11",
+    "python-dotenv>=1.2.3",
+    "streamlit>=1.63.0",
+    "uvicorn>=0.52.4",
+]
+
+[project.scripts]
+cymonic = "cymonic:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
